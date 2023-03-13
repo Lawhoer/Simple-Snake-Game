@@ -13,6 +13,24 @@ int nTail;
 enum eDirection {STOP = 0, LEFT, RÝGHT, UP, DOWN};
 eDirection dir;
 
+void clearScreen()
+{
+	HANDLE hOut;
+	COORD Position;
+
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	Position.X = 0;
+	Position.Y = 0;
+	SetConsoleCursorPosition(hOut, Position); // set the cursor position
+
+	CONSOLE_CURSOR_INFO cursorInfo;
+	GetConsoleCursorInfo(hOut, &cursorInfo);
+	cursorInfo.bVisible = false; // set the cursor visibility
+	SetConsoleCursorInfo(hOut, &cursorInfo);
+}
+
+
 void Setup() {
 	gameOver = false;
 	dir = STOP;
@@ -23,7 +41,8 @@ void Setup() {
 	score = 0;
 }
 void Draw() {
-	system("cls");
+	clearScreen();
+	//system("cls");
 
 	for (int i = 0; i < width+1; i++) 
 		cout << "#";
@@ -58,6 +77,8 @@ void Draw() {
 	for (int i = 0; i < width+1; i++)
 		cout << "#";
 	cout << endl;
+
+	
 	cout << "Score: " << score << endl;
 }
 void Input() {
@@ -128,6 +149,7 @@ void Logic() {
 }
 
 
+
 int main() {
 	Setup();
 	while (!gameOver)
@@ -135,7 +157,7 @@ int main() {
 		Draw();
 		Input();
 		Logic();
-		Sleep(10);
+		Sleep(50);
 	}
 	return 0;
 }
