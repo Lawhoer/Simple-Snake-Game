@@ -7,7 +7,8 @@ using namespace std;
 bool gameOver;
 const int width = 40;
 const int height = 20;
-int x, y,fruitX,fruitY,score;
+int x, y,score;
+COORD fruit;
 int tailX[100],tailY[100];
 int nTail;
 enum eDirection {STOP = 0, LEFT, RÝGHT, UP, DOWN};
@@ -36,8 +37,8 @@ void Setup() {
 	dir = STOP;
 	x = width / 2;
 	y = height / 2;
-	fruitX = rand() % width;
-	fruitY = rand() % height;
+	fruit.X = rand() % width;
+	fruit.Y = rand() % height;
 	score = 0;
 }
 void Draw() {
@@ -56,7 +57,7 @@ void Draw() {
 
 			if (i == y && j == x)
 				cout << "O";
-			else if (i == fruitY && j == fruitX)
+			else if (i == fruit.Y && j == fruit.X)
 				cout << "F";
 			else {
 				bool print = false;
@@ -139,10 +140,10 @@ void Logic() {
 		if (tailX[i] == x && tailY[i] == y)
 			gameOver = true;
 	}
-	if (x == fruitX && y == fruitY) {
+	if (x == fruit.X && y == fruit.Y) {
 		score += 10;
-		fruitX = rand() % width;
-		fruitY = rand() % height;
+		fruit.X = rand() % width;
+		fruit.Y = rand() % height;
 		nTail++;
 	}
 		
